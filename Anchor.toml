@@ -5,6 +5,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
+ammv2 = "3gFvCTqH47nAXNVYN4bNfxYCDLhUP3BBNtQisV8cZCSg"
 my_project = "B7fXyi1xwTubKL5tyi8hEzCXvQYsUbxF6ZpfteQqfXhF"
 
 [registry]
