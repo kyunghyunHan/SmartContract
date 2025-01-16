@@ -1,9 +1,9 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
-    token::{Mint, Token, TokenAccount},
+    token::{self,Mint, Token, TokenAccount},
 };
-use anchor_spl::token;
+
 use crate::state::PoolState;
 
 pub fn handler(
@@ -23,8 +23,10 @@ pub fn handler(
 #[instruction(fee_numerator: u64, fee_denominator: u64)]
 pub struct InitializePool<'info> {
     // pool for token_x -> token_y 
-    pub mint0: Account<'info, token::Mint>,
-    pub mint1: Account<'info, token::Mint>,
+    #[account(mut)]
+    pub mint0: Account<'info, Mint>,
+    #[account(mut)]
+    pub mint1: Account<'info, Mint>,
 
     #[account(
         init, 

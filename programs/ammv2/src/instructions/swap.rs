@@ -79,7 +79,7 @@ pub struct Swap<'info> {
         constraint=vault_src.owner == pool_authority.key(),
         constraint=vault_src.mint == user_src.mint,
     )]
-    pub vault_src: Account<'info, token::TokenAccount>,  // Box 제거, token:: 추가
+    pub vault_src: Account<'info, token::TokenAccount>,  // token::TokenAccount 사용
 
     #[account(mut, 
         constraint=vault_dst.owner == pool_authority.key(),
@@ -96,7 +96,7 @@ pub struct Swap<'info> {
     #[account(mut,
         has_one=owner,
     )]
-    pub user_dst: Account<'info, token::TokenAccount>,
+    pub user_dst: Account<'info, token::TokenAccount>,  // Box 제거, token::TokenAccount 사용
 
     pub owner: Signer<'info>,
 
