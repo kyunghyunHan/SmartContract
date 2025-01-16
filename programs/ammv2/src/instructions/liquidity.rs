@@ -171,35 +171,38 @@ pub fn remove_liquidity(
 #[instruction(
     amount_liq0: u64,
     amount_liq1: u64,
-)]  // instruction 매개변수 추가
+)]
 pub struct LiquidityOperation<'info> {
-
     // pool token accounts 
     #[account(mut)]
     pub pool_state: Box<Account<'info, PoolState>>,
     
+    /// CHECK: PDA authority
     #[account(seeds=[b"authority", pool_state.key().as_ref()], bump)]
     pub pool_authority: AccountInfo<'info>,
+
     #[account(mut, 
         constraint = vault0.mint == user0.mint,
         seeds=[b"vault0", pool_state.key().as_ref()], bump)]
-    pub vault0: Box<Account<'info, TokenAccount>>, 
+    pub vault0: Account<'info, token::TokenAccount>,  // Box 제거, token:: 추가
+
     #[account(mut, 
         constraint = vault1.mint == user1.mint,
         seeds=[b"vault1", pool_state.key().as_ref()], bump)]
-    pub vault1: Box<Account<'info, TokenAccount>>,
+    pub vault1: Account<'info, token::TokenAccount>,
+
     #[account(mut, 
         constraint = user_pool_ata.mint == pool_mint.key(),
         seeds=[b"pool_mint", pool_state.key().as_ref()], bump)]
-    pub pool_mint: Box<Account<'info, Mint>>,  
+    pub pool_mint: Account<'info, token::Mint>,  // Box 제거, token:: 추가
     
     // user token accounts 
     #[account(mut, has_one = owner)]
-    pub user0: Box<Account<'info, TokenAccount>>, 
+    pub user0: Account<'info, token::TokenAccount>,
     #[account(mut, has_one = owner)]
-    pub user1: Box<Account<'info, TokenAccount>>, 
+    pub user1: Account<'info, token::TokenAccount>,
     #[account(mut, has_one = owner)]
-    pub user_pool_ata: Box<Account<'info, TokenAccount>>, 
+    pub user_pool_ata: Account<'info, token::TokenAccount>,
     pub owner: Signer<'info>,
 
     // other 

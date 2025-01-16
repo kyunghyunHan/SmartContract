@@ -3,6 +3,7 @@ use anchor_spl::{
     associated_token::AssociatedToken,
     token::{Mint, Token, TokenAccount},
 };
+use anchor_spl::token;
 use crate::state::PoolState;
 
 pub fn handler(
@@ -18,28 +19,26 @@ pub fn handler(
 
     Ok(())
 }
-
 #[derive(Accounts)]
+#[instruction(fee_numerator: u64, fee_denominator: u64)]
 pub struct InitializePool<'info> {
     // pool for token_x -> token_y 
-    pub mint0: Account<'info, Mint>,
-    pub mint1: Account<'info, Mint>,
+    pub mint0: Account<'info, token::Mint>,
+    pub mint1: Account<'info, token::Mint>,
 
     #[account(
         init, 
         payer=payer, 
         seeds=[b"pool_state", mint0.key().as_ref(), mint1.key().as_ref()], 
         bump,
-        space = 8 + std::mem::size_of::<PoolState>()  // 여기 추가
-
+        space = 8 + std::mem::size_of::<PoolState>()
     )]
     pub pool_state: Box<Account<'info, PoolState>>,
 
-    // authority so 1 acc pass in can derive all other pdas 
+    /// CHECK: PDA authority
     #[account(seeds=[b"authority", pool_state.key().as_ref()], bump)]
     pub pool_authority: AccountInfo<'info>,
 
-    // account to hold token X
     #[account(
         init, 
         payer=payer, 
@@ -48,8 +47,8 @@ pub struct InitializePool<'info> {
         token::mint = mint0,
         token::authority = pool_authority
     )]
-    pub vault0: Box<Account<'info, TokenAccount>>, 
-    // account to hold token Y
+    pub vault0: Account<'info, token::TokenAccount>,  // Box 제거, token:: 추가
+
     #[account(
         init, 
         payer=payer, 
@@ -58,9 +57,8 @@ pub struct InitializePool<'info> {
         token::mint = mint1,
         token::authority = pool_authority
     )]
-    pub vault1: Box<Account<'info, TokenAccount>>, 
+    pub vault1: Account<'info, token::TokenAccount>, 
 
-    // pool mint : used to track relative contribution amount of LPs
     #[account(
         init, 
         payer=payer,
@@ -69,11 +67,11 @@ pub struct InitializePool<'info> {
         mint::decimals = 9,
         mint::authority = pool_authority
     )] 
-    pub pool_mint: Box<Account<'info, Mint>>, 
+    pub pool_mint: Account<'info, token::Mint>, 
+
     #[account(mut)]
     pub payer: Signer<'info>,
 
-    // accounts required to init a new mint
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
     pub associated_token_program: Program<'info, AssociatedToken>,

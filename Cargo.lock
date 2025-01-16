@@ -4736,6 +4736,7 @@ dependencies = [
 name = "tests"
 version = "0.1.0"
 dependencies = [
+ "ammv2",
  "anchor-client",
  "my-project",
 ]

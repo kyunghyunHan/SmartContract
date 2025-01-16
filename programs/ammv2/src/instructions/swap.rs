@@ -65,37 +65,40 @@ pub fn swap(
 }
 
 #[derive(Accounts)]
+#[instruction(amount_in: u64, min_amount_out: u64)]  // instruction 매개변수 추가
 pub struct Swap<'info> {
-
     // pool token accounts 
     #[account(mut)]
     pub pool_state: Box<Account<'info, PoolState>>,
 
+    /// CHECK: PDA authority
     #[account(mut, seeds=[b"authority", pool_state.key().as_ref()], bump)]
     pub pool_authority: AccountInfo<'info>,
+
     #[account(mut, 
         constraint=vault_src.owner == pool_authority.key(),
         constraint=vault_src.mint == user_src.mint,
     )]
-    pub vault_src: Box<Account<'info, TokenAccount>>, 
+    pub vault_src: Account<'info, token::TokenAccount>,  // Box 제거, token:: 추가
+
     #[account(mut, 
         constraint=vault_dst.owner == pool_authority.key(),
-        constraint=vault_src.mint == user_src.mint,
+        constraint=vault_dst.mint == user_dst.mint,    // vault_src.mint를 vault_dst.mint로 수정
     )]
-    pub vault_dst: Box<Account<'info, TokenAccount>>,
+    pub vault_dst: Account<'info, token::TokenAccount>,
     
     // user token accounts 
     #[account(mut,
         has_one=owner,
     )]
-    pub user_src: Box<Account<'info, TokenAccount>>, 
+    pub user_src: Account<'info, token::TokenAccount>,
+
     #[account(mut,
         has_one=owner,
     )]
-    pub user_dst: Box<Account<'info, TokenAccount>>, 
+    pub user_dst: Account<'info, token::TokenAccount>,
+
     pub owner: Signer<'info>,
 
-    // other 
     pub token_program: Program<'info, Token>,
 }
-
