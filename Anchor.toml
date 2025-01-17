@@ -6,6 +6,7 @@ skip-lint = false
 
 [programs.localnet]
 ammv2 = "3gFvCTqH47nAXNVYN4bNfxYCDLhUP3BBNtQisV8cZCSg"
+hello_anchor = "DhJcqp5xpc9LdpzgogLd4b9AyARP4M96j24qSACZQrjR"
 my_project = "B7fXyi1xwTubKL5tyi8hEzCXvQYsUbxF6ZpfteQqfXhF"
 
 [registry]

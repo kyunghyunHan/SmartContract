@@ -63,7 +63,8 @@ pub fn swap(
 
     Ok(())
 }
-
+//Accounts : 명령어에 필요한 계정 목록을 나타내는 구조체 적용
+//account 프로그램에 대한 사용자 정의 계정 유형
 #[derive(Accounts)]
 #[instruction(amount_in: u64, min_amount_out: u64)]  // instruction 매개변수 추가
 pub struct Swap<'info> {
