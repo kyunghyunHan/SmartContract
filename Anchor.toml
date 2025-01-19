@@ -8,7 +8,9 @@ skip-lint = false
 ammv2 = "3gFvCTqH47nAXNVYN4bNfxYCDLhUP3BBNtQisV8cZCSg"
 counter = "FqYREJjB4ys9nxi3CGPxHwoRWEvcphswodYQuMoWQay3"
 hello_anchor = "DhJcqp5xpc9LdpzgogLd4b9AyARP4M96j24qSACZQrjR"
+if_else = "Evjqa5bniu9VBTiDmJFi7gmBUt1D178MENedMkjEdG8J"
 my_project = "B7fXyi1xwTubKL5tyi8hEzCXvQYsUbxF6ZpfteQqfXhF"
+study = "7yWB3fAzXsMzj4Z1uU516Tvvh5k5rjUiucM46Q6zHYZD"
 
 [registry]
 url = "https://api.apr.dev"
