@@ -15,8 +15,12 @@ idl-build = [
 ```
 ## anchor
 - declare_id:온체인 주소 저장
-
-
+## 단위
+- 1 SOL = 10^9 lamports
+ ```rs
+     let balance_in_lamports = account.lamports();
+fe
+```
 ## Defi
 
 - 금융 서비스
