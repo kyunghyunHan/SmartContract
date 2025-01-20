@@ -42,3 +42,31 @@ fn test_loop() {
     let counter_account: study::Counter = program.account(counter).unwrap();
     assert_eq!(counter_account.count, 10);
 }
+#[test]
+fn test_mapping() {
+
+    let anchor_wallet = std::env::var("ANCHOR_WALLET").unwrap();
+    let payer = read_keypair_file(&anchor_wallet).unwrap();
+
+    let client = Client::new_with_options(Cluster::Localnet, &payer, CommitmentConfig::confirmed());
+    let program = client.program(study::ID).unwrap();
+    let key = Pubkey::new_unique();
+
+    let seeds = &[b"value", key.as_ref()];
+    let (value_account, _) = Pubkey::find_program_address(seeds, &study::ID);
+    let value = 100;
+
+    let _tx = program
+        .request()
+        .accounts(study::accounts::InitializeValue {
+            value_account,
+            payer: program.payer(),
+            system_program: system_program::ID,
+        })
+        .args(study::instruction::InitializeValue { key, value })
+        .signer(&payer)
+        .send()
+        .unwrap();
+
+
+}
