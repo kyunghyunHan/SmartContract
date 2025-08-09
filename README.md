@@ -24,3 +24,24 @@ fe
 ## Defi
 
 - 금융 서비스
+
+
+
+## Anchor
+### 1) 
+```
+anchor init project
+```
+
+```
+anchor build
+
+```
+```
+anchor deploy
+
+```
+```
+anchor test
+
+```
