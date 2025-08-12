@@ -7,6 +7,8 @@ skip-lint = false
 
 [programs.localnet]
 a = "FY7kXZMjAWJaGJYPYVPvhwSG7mXYNYJkN5WKhaVzqgrN"
+action = "FEGhp5Q5H3ZDEUYvaKBhNZDp6Jn8Qi1K6MWR7P9JWKgi"
+auction = "23gHPkzs5V46TvMSpa5tJY1wWFCExxsBGFv2WypP2Ztc"
 counter = "ArJRUEnriCkSkGvUi1gwfi6aoBKseYjsZ7aXmraqCFq5"
 sol = "7hRCCoJaLsezkJW57mGVvfcvrbmQ3cGXWX5jeePCxfyW"
 
