@@ -2,14 +2,15 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { Counter } from "../target/types/counter";
 import { expect } from "chai";
+
+
 describe("counter", () => {
-    // Configure the client to use the local cluster.
     anchor.setProvider(anchor.AnchorProvider.env());
-  
+    //프로그램 메소드 안에 함수들이 있음
     const program = anchor.workspace.Counter as Program<Counter>;
+
     const provider = anchor.getProvider();
   
-    // Generate a new keypair for the counter account
     const counterKeypair = anchor.web3.Keypair.generate();
   
     it("Initialize counter", async () => {
@@ -21,20 +22,26 @@ describe("counter", () => {
         })
         .signers([counterKeypair])
         .rpc();
-  
+     
       console.log("Initialize transaction signature:", tx);
   
       // Fetch the counter account
       const counterAccount = await program.account.counter.fetch(
         counterKeypair.publicKey
       );
-  
+     //expect: 검증함수
+     //카운터가 0인지
+     //authority:계정 주소
       expect(counterAccount.count.toNumber()).to.equal(0);
+      //카운터를 계정을 만든 사람
+      //테스트를 하는 사람의 키가 같아야함
       expect(counterAccount.authority.toString()).to.equal(
         provider.wallet.publicKey.toString()
       );
     });
-  
+    
+
+    
     it("Increment counter", async () => {
       const tx = await program.methods
         .increment()
