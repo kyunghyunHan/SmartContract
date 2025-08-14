@@ -1,5 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{TokenAccount,Token};
+use anchor_spl::token::Transfer;
+use anchor_spl::token;
 declare_id!("23gHPkzs5V46TvMSpa5tJY1wWFCExxsBGFv2WypP2Ztc");
 
 #[program]
@@ -8,6 +10,25 @@ pub mod auction {
 
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         msg!("Greetings from: {:?}", ctx.program_id);
+        Ok(())
+    }
+    pub fn start_auction(ctx: Context<StartAuction>) -> Result<()> {
+        let auction = &mut ctx.accounts.auction;
+    
+        // NFT 전송
+        let cpi_accounts = Transfer {
+            from: ctx.accounts.seller_nft_account.to_account_info(),
+            to: ctx.accounts.auction_nft_account.to_account_info(),
+            authority: ctx.accounts.seller.to_account_info(),
+        };
+        
+        let cpi_program = ctx.accounts.token_program.to_account_info();
+        let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+    
+        token::transfer(cpi_ctx, 1)?; // NFT 수량 1개
+        auction.started = true;
+        auction.end_at = Clock::get()?.unix_timestamp + 7 * 24 * 60 * 60;
+    
         Ok(())
     }
 }
@@ -44,4 +65,24 @@ pub struct StartAuction<'info> {
     #[account(mut)]
     pub auction_nft_account: Account<'info, TokenAccount>,
     pub token_program: Program<'info, Token>,
+}
+#[error_code]
+pub enum AuctionError {
+    #[msg("Auction has already started")]
+    AlreadyStarted,
+    
+    #[msg("You are not the seller")]
+    NotSeller,
+    
+    #[msg("Auction has not started yet")]
+    NotStarted,
+    
+    #[msg("Auction has already ended")]
+    AlreadyEnded,
+    
+    #[msg("Auction has ended")]
+    Ended,
+    
+    #[msg("Bid amount is too low")]
+    BidTooLow,
 }
