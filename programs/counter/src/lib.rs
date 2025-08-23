@@ -41,7 +41,7 @@ pub mod counter {
 #[derive(Accounts)]
 pub struct Initialize <'info>{
     #[account(
-        init,
+        init,//새 주소를만들도록
         payer = user,//계정생성비용은 유저가 냄
         space = 8+ Counter::INIT_SPACE
     )]

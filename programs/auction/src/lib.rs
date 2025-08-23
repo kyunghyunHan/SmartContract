@@ -156,16 +156,16 @@ pub mod auction {
 pub struct InitializeAuction<'info> {
     #[account(
         init,
-        payer = seller,
-        space = 8 + Auction::INIT_SPACE,
-        seeds = [b"auction", seller.key().as_ref()],
-        bump
+        payer = seller, //계정만들떄 누가 값을 지불할지
+        space = 8 + Auction::INIT_SPACE,//8은 Anchor에서 자동으로 쓰는 account discriminator Auction::INIT_SPACE는 경매 상태(Auction struct) 저장 공간
+        seeds = [b"auction", seller.key().as_ref()],//각 판매자마다 고유한 경매 계정
+        bump//PDA를 valid public key로 만들어주는 보정값
     )]
     pub auction: Account<'info, Auction>,
     #[account(mut)]
-    pub seller: Signer<'info>,
+    pub seller: Signer<'info>,//트랜잭션에 서명해야 하는 계정
     pub nft_mint: Account<'info, Mint>,
-    #[account(mut)]
+    #[account(mut)]//계정 상태나 lamports가 변경될 수 있음
     pub seller_token_account: Account<'info, TokenAccount>,
     #[account(mut)]
     pub auction_token_account: Account<'info, TokenAccount>,
