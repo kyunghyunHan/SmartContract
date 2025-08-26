@@ -3,3 +3,8 @@
 */app
 */migrations
 */.anchor
+*/out
+*/cache
+*/lib
+*.DS_Store
+.DS_Store

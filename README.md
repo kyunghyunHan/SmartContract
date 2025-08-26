@@ -1,25 +1,7 @@
-## Anchor
-### 1) 
-```
-anchor init project
-```
+# Smart Contract
 
-```
-anchor build
+## Solane
 
-```
-```
-anchor deploy
+## Sui
 
-```
-```
-anchor test
-
-```
-- 새로운 프로그램 
-```
-anchor new <name>
-```
-
-## Test
-
+## Solidity
