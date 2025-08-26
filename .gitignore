@@ -1,5 +1,5 @@
-/target
-/node_modules
-/app
-/migrations
-/.anchor
+*/target
+*/node_modules
+*/app
+*/migrations
+*/.anchor
