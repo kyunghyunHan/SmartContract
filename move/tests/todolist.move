@@ -63,7 +63,7 @@ fun test_todolist_insert() {
         assert!(vector::length(&tasks) == 1, 1);
         //참조
        let task = vector::borrow(&tasks, 0);
-        assert!(todolist::get_task_content(task) == string::utf8(b"Test Task1"), E_NOT_OWNER);
+        assert!(todolist::get_task_content(task) == string::utf8(b"Test Task"), E_NOT_OWNER);
         // assert!(!task.completed, 3); // completed는 초기값이 false
         
         test_scenario::return_to_sender(&scenario, todolist_val);
