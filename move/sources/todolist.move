@@ -16,9 +16,8 @@ module tester::todolist{
        let todo_list = TodoList {
             id: object::new(ctx),
             owner: tx_context::sender(ctx),
-            value: vector::empty() // 빈 vector로 초기화
+            value: vector::empty() 
         };
-        // 생성된 TodoList를 트랜잭션 발신자에게 전송
         transfer::transfer(todo_list, tx_context::sender(ctx))
     }
 public fun get_task_content(task: &Task): String {
