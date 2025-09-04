@@ -51,4 +51,7 @@ public fun get_task_content(task: &Task): String {
         let task = vector::borrow_mut(&mut todo_list.value, task_index);
         task.completed = !task.completed;
     }
+    public fun is_task_completed(task: &Task): bool {
+    task.completed
+}
 }

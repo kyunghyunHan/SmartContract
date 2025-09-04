@@ -3,7 +3,7 @@
 ## Solana
 - [anchor]()
 ## Sui
-- []()
+- [SuiMove](./move/suimove.md)
 ## Solidity
 - [Foundry]()
 
