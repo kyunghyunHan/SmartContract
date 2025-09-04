@@ -34,5 +34,5 @@ pub struct Initialize<'info> {
 #[account]
 pub struct Avatar {
     pub authority: Pubkey, //authority:32 byte
-    pub level: i64,
+    pub level: i64,        //8byte
 }
